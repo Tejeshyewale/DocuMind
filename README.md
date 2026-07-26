@@ -109,3 +109,5 @@ DocuMind/
   info needed anywhere in this project.
 - Embeddings run locally via `sentence-transformers`, so there's no per-query cost or
   external API call for that step...!!
+
+  STAR the repo
