@@ -26,7 +26,7 @@ def get_llm():
     Configure and load the Groq chat LLM.
     Model is read from GROQ_CHAT_MODEL env var, and api key from GROQ_API_KEY.
     """
-    model_name = os.getenv("GROQ_CHAT_MODEL", "llama-3.3-70b-versatile")
+    model_name = os.getenv("GROQ_CHAT_MODEL", "openai/gpt-oss-120b")
     return ChatGroq(
         model=model_name,
         groq_api_key=os.getenv("GROQ_API_KEY"),
