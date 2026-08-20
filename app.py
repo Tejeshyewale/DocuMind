@@ -171,16 +171,17 @@ with st.sidebar:
                         with st.spinner(f"Loading '{filename}' from cache index..."):
                             store = load_vector_store(index_path)
                             st.session_state.vector_stores[file_hash] = store
-                            
-                            # Retrieve stats to display (count pages/chunks if needed or just save defaults)
-                            # We can extract document metadata to reconstruct page list sizes
-                            # For simplicity we estimate/load page details
-                            pages_count = len(set(store.docstore._dict.values())) # estimate or store in a separate file if needed
-                            # To be accurate, let's load details
+
+                            # NOTE: docstore._dict is a dict of {id: Document}.
+                            # Document objects are NOT hashable, so we must NOT
+                            # wrap .values() in set(). Just count dict entries
+                            # directly to get the number of cached chunks.
+                            chunk_count = len(store.docstore._dict)
+
                             st.session_state.loaded_docs[file_hash] = {
                                 "filename": filename,
                                 "pages": "Cached",
-                                "chunks": "Cached"
+                                "chunks": chunk_count
                             }
                             st.toast(f"⚡ Loaded '{filename}' from cache!", icon="💾")
                     else:
